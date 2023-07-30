@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# 2022 GPL v2 only
+# - flo932@uxsrv.de micha.r
 
 import os
 #print(os.environ)
