@@ -1,9 +1,15 @@
 ## python simple cgi monitoring script's
+```
+I do not want to use a monitoring-agent 
+on various systems/servers
 
-to get informations about a system
-- server's
-- Proxmox
+I prefer to use simple python-cgi scritps to request
+system status like disk,zfs,memory,cpu...
 
+you can also request system status with curl
+but you have to calculate the token first (psk)
+
+```
 
 ## setup / install
 ```
