@@ -16,8 +16,9 @@ git clone https://github.com/flo932/check-cgi.git check
 
 cd /opt/check/
 # create a psk/password 
-# copy this to icinga2 and other nodes
 pwgen -n 30 -c 1 > psk
+# copy this to icinga2 and other nodes
+# to /opt/check/psk or /etc/icinga2/scripts/xxx_psk
 
 # install a webserver with cgi enabled
 # then link the www dir

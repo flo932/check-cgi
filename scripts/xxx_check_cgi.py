@@ -4,16 +4,18 @@ import sys
 https://community.icinga.com/t/add-custom-service-check-with-python-script/4703/3
 
 object CheckCommand "python-script1" {
-   command = [ PluginDir + "/check_micha" ]
+   command = [ PluginDir + "/check_xxx" ]
 
    arguments = {
       "-s" = "$address$"
       "-q" = "$db_server$"
       "-u" = "$db_username$"
       "-p" = "$db_password$"
+      "-c" = "$cmd$"
+      "-t" = "$token$"
    }
 }
-object Host "deb8-fertigung-micha" {
+object Host "deb8-fertigung-xxx" {
 #import "generic-host"
 address = "192.168.0.28"
 check_command = "python-script1"
@@ -23,26 +25,7 @@ import time
 import os
 from collections import OrderedDict
 
-import hashlib
-import time
-
-print( sys.argv )
-
-from optparse import OptionParser
-parser = OptionParser()
-parser.add_option("-a", "--addr", dest="addr",
-                  help="host ip")
-parser.add_option("", "--host", dest="host",
-                  help="host name")
-
-parser.add_option("-q", "--quiet",
-                  action="store_false", dest="verbose", default=True,
-                  help="don't print status messages to stdout")
-
-(options, args) = parser.parse_args()
-
-
-import micha_token as token
+import xxx_token as token
 
 if "-psk" in sys.argv:
     i = sys.argv.index("-psk")
@@ -52,26 +35,52 @@ if "-psk" in sys.argv:
 else:
     t = token.token()
 
-
 x=os.environ
 x=dict(x)
 x= sys.argv
-#f = open("/tmp/env.log","w")
-#f.write(str(x))
-#f.close()
-_exit = 100
+print( sys.argv )
+_exit = 3 #100
 try:
-    #cmd= "ps -Ao %cpu,command  | grep mysqld"
-    #os.system(cmd)
     h="192.168.0.28"
     if "-a" in sys.argv:
         i = sys.argv.index("-a")
         _h=sys.argv[i+1]
-        #if _h.endswith(".de"):
-        #    h= _h
         h = _h
+    while ".." in h:
+        h = h.replace("..","")
+    while "/" in h:
+        h = h.replace("/","")
 
-    cmd="curl http://{}:/sys/check_zpool.cgi?token={}".format(h,t)
+    c = "check_mem.cgi"
+    if "-c" in sys.argv:
+        i = sys.argv.index("-c")
+        _h=sys.argv[i+1]
+        c = _h
+    while ".." in c:
+        c = c.replace("..","")
+    while "/" in c:
+        c = c.replace("/","")
+
+    m = "check_mem.cgi"
+    if "-m" in sys.argv:
+        i = sys.argv.index("-m")
+        _h=sys.argv[i+1]
+        m = _h
+    while ".." in m:
+        m = m.replace("..","")
+    while "/" in m:
+        m = m.replace("/","")
+
+    code = ""
+    if "-code" in sys.argv:
+        i = sys.argv.index("-code")
+        _h=sys.argv[i+1]
+        code = _h
+    while ".." in code:
+        code = code.replace("..","")
+    while "/" in m:
+        code = code.replace("/","")
+    cmd="curl 'http://{}:/sys/{}?token={}&mode={}&code={}'".format(h,c,t,m,code)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)
@@ -89,11 +98,10 @@ try:
                 print()
             except Exception as e:print("_exit",e)
 
-    #print("exit:",_exit)
-    #print()
+    print("exit:",_exit)
+    print()
     #print(" --> | ",end="")
     #print(perf)
-    #sys.exit(_exit)
+
 finally:
-    pass
-sys.exit(_exit)
+    sys.exit(_exit)

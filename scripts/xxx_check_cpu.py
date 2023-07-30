@@ -4,7 +4,7 @@ import sys
 https://community.icinga.com/t/add-custom-service-check-with-python-script/4703/3
 
 object CheckCommand "python-script1" {
-   command = [ PluginDir + "/check_micha" ]
+   command = [ PluginDir + "/check_xxx" ]
 
    arguments = {
       "-s" = "$address$"
@@ -13,7 +13,7 @@ object CheckCommand "python-script1" {
       "-p" = "$db_password$"
    }
 }
-object Host "deb8-fertigung-micha" {
+object Host "deb8-fertigung-xxx" {
 #import "generic-host"
 address = "192.168.0.28"
 check_command = "python-script1"
@@ -26,7 +26,7 @@ from collections import OrderedDict
 import hashlib
 import time
 
-import micha_token as token
+import xxx_token as token
 
 if "-psk" in sys.argv:
     i = sys.argv.index("-psk")

@@ -4,17 +4,16 @@ import sys
 https://community.icinga.com/t/add-custom-service-check-with-python-script/4703/3
 
 object CheckCommand "python-script1" {
-   command = [ PluginDir + "/check_micha" ]
+   command = [ PluginDir + "/check_xxx" ]
 
    arguments = {
       "-s" = "$address$"
       "-q" = "$db_server$"
       "-u" = "$db_username$"
       "-p" = "$db_password$"
-      "-c" = "check_mem.cgi"
    }
 }
-object Host "deb8-fertigung-micha" {
+object Host "deb8-fertigung-xxx" {
 #import "generic-host"
 address = "192.168.0.28"
 check_command = "python-script1"
@@ -27,7 +26,23 @@ from collections import OrderedDict
 import hashlib
 import time
 
-import micha_token as token
+print( sys.argv )
+
+from optparse import OptionParser
+parser = OptionParser()
+parser.add_option("-a", "--addr", dest="addr",
+                  help="host ip")
+parser.add_option("", "--host", dest="host",
+                  help="host name")
+
+parser.add_option("-q", "--quiet",
+                  action="store_false", dest="verbose", default=True,
+                  help="don't print status messages to stdout")
+
+(options, args) = parser.parse_args()
+
+
+import xxx_token as token
 
 if "-psk" in sys.argv:
     i = sys.argv.index("-psk")
@@ -41,11 +56,13 @@ else:
 x=os.environ
 x=dict(x)
 x= sys.argv
-
-print( sys.argv )
+#f = open("/tmp/env.log","w")
+#f.write(str(x))
+#f.close()
 _exit = 100
-
 try:
+    #cmd= "ps -Ao %cpu,command  | grep mysqld"
+    #os.system(cmd)
     h="192.168.0.28"
     if "-a" in sys.argv:
         i = sys.argv.index("-a")
@@ -53,13 +70,8 @@ try:
         #if _h.endswith(".de"):
         #    h= _h
         h = _h
-    else:
-        _exit = 4
-        print("-a ip not set !") 
-        print("exit:",_exit)
-        sys.exit(_exit)
 
-    cmd="curl http://{}:/sys/check_mem.cgi?token={}".format(h,t)
+    cmd="curl http://{}:/sys/check_zpool.cgi?token={}".format(h,t)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)
@@ -75,9 +87,13 @@ try:
                 _exit = int(line.split(":")[-1])
                 print("<--->",_exit)
                 print()
-            except Exception as e:
-                print("_exit",e)
+            except Exception as e:print("_exit",e)
 
+    #print("exit:",_exit)
+    #print()
+    #print(" --> | ",end="")
+    #print(perf)
+    #sys.exit(_exit)
 finally:
     pass
 sys.exit(_exit)

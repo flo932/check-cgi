@@ -6,7 +6,7 @@ import os
 import sys
 
 def token(secret="Eeth0eekoov4"):
-    psk = ["/opt/check/psk","/etc/icinga2/scripts/micha_psk"]
+    psk = ["/opt/check/psk","/etc/icinga2/scripts/xxx_psk"]
     flag = 0
     for p in psk:
         if os.path.isfile(p):
