@@ -33,7 +33,7 @@ ln -s /opt/check/www /var/www/html/sys/
 # check if cgi scritp's availibel
 curl ip-addresse/sys/
 # should return 
-no token
+>  system
 
 # some scripts in /opt/check/check_x.py need root on the system
 # setup sudo / visudo like
