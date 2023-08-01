@@ -61,7 +61,7 @@ try:
         print("exit:",_exit)
         sys.exit(_exit)
 
-    cmd="curl http://{}:/sys/check_mem.cgi?token={}".format(h,t)
+    cmd="curl -L -k 'http://{}:/sys/check_mem.cgi?token={}'".format(h,t)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)

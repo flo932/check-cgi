@@ -68,7 +68,7 @@ try:
     while "/" in m:
         m = m.replace("/","")
 
-    cmd="curl 'http://{}:/sys/check_mount.cgi?token={}&code={}'".format(h,t,m)
+    cmd="curl -L -k 'http://{}:/sys/check_mount.cgi?token={}&code={}'".format(h,t,m)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)

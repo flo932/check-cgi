@@ -73,7 +73,7 @@ try:
         #    h= _h
         h = _h
 
-    cmd="curl http://{}:/sys/check_repl.cgi?token={}".format(h,t)
+    cmd="curl -L -k http://{}:/sys/check_repl.cgi?token={}'".format(h,t)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)

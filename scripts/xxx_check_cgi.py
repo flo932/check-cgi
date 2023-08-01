@@ -82,7 +82,7 @@ try:
         code = code.replace("..","")
     while "/" in m:
         code = code.replace("/","")
-    cmd="curl 'http://{}:/sys/{}?token={}&mode={}&code={}'".format(h,c,t,m,code)
+    cmd="curl -L -k 'http://{}:/sys/{}?token={}&mode={}&code={}'".format(h,c,t,m,code)
     cmd += " 2> /dev/null"
     print(cmd)
     x=os.popen(cmd)

@@ -28,12 +28,12 @@ title="$pfx $title"
 
 echo "-"
 # notification server 1
-token=$(head -n1 xxx_gotify.token )
-server=$(head -n1 xxx_gotify.server )
+token=$(head -n1 /etc/icinga2/scripts/xxx_gotify.token )
+server=$(head -n1 /etc/icinga2/scripts/xxx_gotify.server )
 curl $server/message?token=$token -F "title=$title" -F "message=$msg" -F "priority=50"
 echo "-"
 # notification server 2
-token=$(head -n2 xxx_gotify.token | tail -n1)
-server=$(head -n2 xxx_gotify.server | tail -n1)
+token=$(head -n2 /etc/icinga2/scripts/xxx_gotify.token | tail -n1)
+server=$(head -n2 /etc/icinga2/scripts/xxx_gotify.server | tail -n1)
 curl $server/message?token=$token -F "title=$title" -F "message=$msg" -F "priority=50"
 echo "-"
