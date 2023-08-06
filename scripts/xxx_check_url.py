@@ -27,7 +27,7 @@ try:
     print(sys.argv)
     print("sys.argv")
 
-    cmd="curl '{url}' 2>/dev/null ".format(url=options.url)
+    cmd="curl -L -k '{url}' 2>/dev/null ".format(url=options.url)
 
     pattern = []
     pattern2 = []
