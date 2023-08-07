@@ -5,7 +5,7 @@ import cgitb
 cgitb.enable()
 
 import os
-print(os.environ)
+#print(os.environ)
 import sys
 
 #print(sys.argv)
@@ -24,10 +24,10 @@ def get_args():
                 k = a[0]
                 v = a[1]
                 data[k] = v
-        print("-",k,v)
+        #print("-",k,v)
         #print(data)
 
-    print()
+    #print()
     return data
 args = get_args()
     
